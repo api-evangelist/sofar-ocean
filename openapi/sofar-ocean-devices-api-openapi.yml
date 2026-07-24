@@ -1,0 +1,103 @@
+openapi: 3.1.0
+info:
+  title: Sofar Ocean Spotter & Smart Mooring Devices API
+  version: '1.0'
+  description: The Spotter & Smart Mooring API gives you access to data transmitted by your Spotter buoys and any attached Smart Mooring sensors via telemetry, plus the Sofar Operational Wave Spectra forecast. Data covers waves, wind, surface temperature, barometric pressure, wave frequency/partition spectra, track position, and subsurface Smart Mooring sensor readings. Transcribed by the API Evangelist enrichment pipeline from the public GitBook documentation; not an official Sofar Ocean specification.
+  contact:
+    name: Sofar Ocean Support
+    url: https://www.sofarocean.com/support
+  termsOfService: https://www.sofarocean.com/legal/terms-of-use
+servers:
+- url: https://api.sofarocean.com
+  description: Production
+security:
+- tokenHeader: []
+- tokenQuery: []
+tags:
+- name: Devices
+  description: Spotter device discovery
+paths:
+  /api/devices:
+    get:
+      tags:
+      - Devices
+      operationId: getDevices
+      summary: List devices
+      description: Retrieve a list containing the display name, Spotter ID, and hull type of any Spotters you have API access to (registered to or shared with your account), ordered by spotterId.
+      parameters:
+      - name: excludeSharedDevices
+        in: query
+        description: Set true to limit the response to Spotters registered directly to your account.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: A list of Spotters associated with the account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DevicesResponse'
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+components:
+  schemas:
+    DevicesResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            devices:
+              type: array
+              items:
+                $ref: '#/components/schemas/Device'
+    AuthError:
+      type: object
+      description: Authentication error envelope.
+      properties:
+        message:
+          type: string
+          enum:
+          - Authentication Failed
+          - No token provided
+    Device:
+      type: object
+      properties:
+        spotterId:
+          type: string
+          description: The Spotter's identifier.
+        name:
+          type:
+          - string
+          - 'null'
+          description: Display name
+          or null if unset.: null
+        hullType:
+          type: string
+          enum:
+          - spotter
+          - scout
+          - velella
+          description: The Spotter's hull type.
+  securitySchemes:
+    tokenHeader:
+      type: apiKey
+      in: header
+      name: token
+      description: API token tied to your Sofar account, generated at spotter.sofarocean.com/api.
+    tokenQuery:
+      type: apiKey
+      in: query
+      name: token
+      description: API token passed as a query parameter.
+externalDocs:
+  description: Sofar API documentation
+  url: https://docs.sofarocean.com

@@ -1,0 +1,456 @@
+openapi: 3.1.0
+info:
+  title: Sofar Ocean Spotter & Smart Mooring Devices Spotter Data API
+  version: '1.0'
+  description: The Spotter & Smart Mooring API gives you access to data transmitted by your Spotter buoys and any attached Smart Mooring sensors via telemetry, plus the Sofar Operational Wave Spectra forecast. Data covers waves, wind, surface temperature, barometric pressure, wave frequency/partition spectra, track position, and subsurface Smart Mooring sensor readings. Transcribed by the API Evangelist enrichment pipeline from the public GitBook documentation; not an official Sofar Ocean specification.
+  contact:
+    name: Sofar Ocean Support
+    url: https://www.sofarocean.com/support
+  termsOfService: https://www.sofarocean.com/legal/terms-of-use
+servers:
+- url: https://api.sofarocean.com
+  description: Production
+security:
+- tokenHeader: []
+- tokenQuery: []
+tags:
+- name: Spotter Data
+  description: Data collected by onboard Spotter sensors
+paths:
+  /api/latest-data:
+    get:
+      tags:
+      - Spotter Data
+      operationId: getLatestData
+      summary: Get latest data
+      description: Returns the most recently transmitted device, waves and sensor data from a Spotter, specified by spotterId.
+      parameters:
+      - name: spotterId
+        in: query
+        required: true
+        schema:
+          type: string
+        description: The identifier of the device to retrieve information from.
+      - name: includeWindData
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Set true to return wind data.
+      - name: includeSurfaceTempData
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Set true to return surface temperature data.
+      - name: includeDirectionalMoments
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Set true to return directional moments data (Waves Spectrum Full mode).
+      - name: includePartitionData
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Set true to return partition data.
+      - name: includeBarometerData
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Set true to return barometer data.
+      responses:
+        '200':
+          description: The latest data sample stream for the Spotter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpotterDataResponse'
+        '400':
+          description: Device not found or invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusError'
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+  /api/wave-data:
+    get:
+      tags:
+      - Spotter Data
+      operationId: getWaveData
+      summary: Get historical data
+      description: Returns waves and sensor data collected and transmitted by a Spotter, specified by spotterId, between startDate and endDate. For Spotters shared but not registered to your account, access is limited to the past 30 days.
+      parameters:
+      - name: spotterId
+        in: query
+        required: true
+        schema:
+          type: string
+        description: The identifier of the device to retrieve data from.
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 20
+          maximum: 500
+        description: Maximum data samples per type (500; 100 when frequencyData is included).
+      - name: startDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        description: ISO 8601 start date for data inclusion.
+      - name: endDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        description: ISO 8601 end date for data inclusion (defaults to now).
+      - name: includeWaves
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: true
+        description: Set false to omit waves data.
+      - name: includeWindData
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: includeSurfaceTempData
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: includeFrequencyData
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: includeDirectionalMoments
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: includePartitionData
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: includeBarometerData
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: includeTrack
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: processingSources
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - embedded
+          - hdr
+          - all
+          default: embedded
+        description: Data processing source.
+      responses:
+        '200':
+          description: A data stream for the specified time window.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpotterDataResponse'
+        '400':
+          description: Device not found or invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusError'
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+  /api/search:
+    get:
+      tags:
+      - Spotter Data
+      operationId: searchData
+      summary: Search data by area (beta)
+      description: Returns data from all Spotters registered to your account within the specified geospatial area between startDate and endDate. Beta endpoint; input and output parameters are subject to change without notice.
+      parameters:
+      - name: shape
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - circle
+          - envelope
+        description: The shape of the geospatial area.
+      - name: shapeParams
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Comma-separated SRID 4326 coordinates (lat,lon). One pair for circle, two for envelope.
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date-time
+        description: ISO 8601 start date.
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date-time
+        description: ISO 8601 end date.
+      - name: pageSize
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 500
+        description: Desired number of samples returned.
+      - name: radius
+        in: query
+        required: false
+        schema:
+          type: number
+        description: Radius in meters (required when shape is circle).
+      responses:
+        '200':
+          description: A paged data stream within the area and time window.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: Missing radius, improper shapeParams, or invalid date.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusError'
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+components:
+  schemas:
+    WindSample:
+      type: object
+      properties:
+        speed:
+          type: number
+          description: Wind speed in meters per second.
+        direction:
+          type: number
+          description: Wind direction in degrees.
+        seasurfaceId:
+          type: integer
+          description: 1 glassy, 2 choppy, 3 rough.
+        algorithm_version:
+          type: integer
+          description: Wind algorithm version.
+    WaveSample:
+      type: object
+      properties:
+        significantWaveHeight:
+          type: number
+          description: Bulk significant wave height in meters.
+        peakPeriod:
+          type: number
+          description: Peak wave period in seconds.
+        meanPeriod:
+          type: number
+          description: Mean wave period in seconds.
+        peakDirection:
+          type: number
+          description: Peak wave direction in degrees.
+        peakDirectionalSpread:
+          type: number
+          description: Peak wave directional spreading in degrees.
+        meanDirection:
+          type: number
+          description: Mean wave direction in degrees.
+        meanDirectionalSpread:
+          type: number
+          description: Mean wave directional spreading in degrees.
+        timestamp:
+          type: string
+          format: date-time
+        latitude:
+          type: number
+        longitude:
+          type: number
+    TrackSample:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+        timestamp:
+          type: string
+          format: date-time
+    SearchResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+        metadata:
+          type: object
+          properties:
+            page:
+              type: object
+              properties:
+                nextPage:
+                  type: string
+                hasMoreData:
+                  type: boolean
+                pageSize:
+                  type: integer
+    BarometerSample:
+      type: object
+      properties:
+        value:
+          type: number
+        units:
+          type: string
+          description: e.g. hPa
+        unit_type:
+          type: string
+          description: e.g. barometric_pressure
+        data_type_name:
+          type: string
+          description: e.g. sofar_meanbaropressure_13bits
+    SpotterData:
+      type: object
+      properties:
+        spotterId:
+          type: string
+        spotterName:
+          type: string
+        payloadType:
+          type: string
+          enum:
+          - waves
+          - sensorData
+          - full
+          - track
+          description: The type of payload.
+        batteryVoltage:
+          type: number
+        batteryPower:
+          type: number
+        solarVoltage:
+          type: number
+        humidity:
+          type: number
+          description: Internal relative humidity percentage.
+        commSource:
+          type: string
+          enum:
+          - cellular
+          - satellite
+          description: Telemetry source.
+        waves:
+          type: array
+          items:
+            $ref: '#/components/schemas/WaveSample'
+        wind:
+          type: array
+          items:
+            $ref: '#/components/schemas/WindSample'
+        surfaceTemp:
+          type: array
+          items:
+            $ref: '#/components/schemas/SurfaceTempSample'
+        barometerData:
+          type: array
+          items:
+            $ref: '#/components/schemas/BarometerSample'
+        track:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrackSample'
+    SpotterDataResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SpotterData'
+    StatusError:
+      type: object
+      description: Request error envelope.
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+        message:
+          type: string
+    AuthError:
+      type: object
+      description: Authentication error envelope.
+      properties:
+        message:
+          type: string
+          enum:
+          - Authentication Failed
+          - No token provided
+    SurfaceTempSample:
+      type: object
+      properties:
+        degrees:
+          type: number
+          description: Surface temperature in degrees.
+  securitySchemes:
+    tokenHeader:
+      type: apiKey
+      in: header
+      name: token
+      description: API token tied to your Sofar account, generated at spotter.sofarocean.com/api.
+    tokenQuery:
+      type: apiKey
+      in: query
+      name: token
+      description: API token passed as a query parameter.
+externalDocs:
+  description: Sofar API documentation
+  url: https://docs.sofarocean.com

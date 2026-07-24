@@ -1,0 +1,190 @@
+openapi: 3.1.0
+info:
+  title: Sofar Ocean Spotter & Devices Smart Mooring API
+  version: '1.0'
+  description: The Spotter & Smart Mooring API gives you access to data transmitted by your Spotter buoys and any attached Smart Mooring sensors via telemetry, plus the Sofar Operational Wave Spectra forecast. Data covers waves, wind, surface temperature, barometric pressure, wave frequency/partition spectra, track position, and subsurface Smart Mooring sensor readings. Transcribed by the API Evangelist enrichment pipeline from the public GitBook documentation; not an official Sofar Ocean specification.
+  contact:
+    name: Sofar Ocean Support
+    url: https://www.sofarocean.com/support
+  termsOfService: https://www.sofarocean.com/legal/terms-of-use
+servers:
+- url: https://api.sofarocean.com
+  description: Production
+security:
+- tokenHeader: []
+- tokenQuery: []
+tags:
+- name: Smart Mooring
+  description: Data collected by Smart Mooring subsurface sensors
+paths:
+  /api/sensor-data:
+    get:
+      tags:
+      - Smart Mooring
+      operationId: getSensorData
+      summary: Get Smart Mooring sensor data
+      description: Returns Smart Mooring sensor data collected and transmitted by a Spotter, specified by spotterId, between startDate and endDate.
+      parameters:
+      - name: spotterId
+        in: query
+        required: true
+        schema:
+          type: string
+        description: The Spotter ID of the device to retrieve data from.
+      - name: startDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        description: ISO 8601 start date (defaults to 24 hours ago).
+      - name: endDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        description: ISO 8601 end date (defaults to now).
+      - name: includeSoundPressureReadings
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Set true to return sound pressure level (SPL) readings from hydrophone Spotters via cellular.
+      responses:
+        '200':
+          description: A flat data stream of Smart Mooring sensor transmissions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensorDataResponse'
+        '400':
+          description: Device not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusError'
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+  /api/sensor-configuration-history:
+    get:
+      tags:
+      - Smart Mooring
+      operationId: getSensorConfigurationHistory
+      summary: Get Smart Mooring sensor configuration history
+      description: Retrieve Smart Mooring sensor configurations from a Spotter for a specified time window. Configurations can be cross-referenced with the configuration_checksum returned by the Sensor Data endpoint.
+      parameters:
+      - name: spotterId
+        in: query
+        required: true
+        schema:
+          type: string
+        description: The Spotter ID of the device to retrieve configurations from.
+      - name: startDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        description: ISO 8601 start date for the configuration window.
+      - name: endDate
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        description: ISO 8601 end date for the configuration window.
+      responses:
+        '200':
+          description: A list of Smart Mooring sensor configurations for the time window.
+        '400':
+          description: Device not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusError'
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+components:
+  schemas:
+    StatusError:
+      type: object
+      description: Request error envelope.
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+        message:
+          type: string
+    AuthError:
+      type: object
+      description: Authentication error envelope.
+      properties:
+        message:
+          type: string
+          enum:
+          - Authentication Failed
+          - No token provided
+    SensorReading:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+        timestamp:
+          type: string
+          format: date-time
+        sensorPosition:
+          type: integer
+          description: Sensor physical position (1 closest to Spotter).
+        units:
+          type: string
+        value:
+          description: The measured value.
+          oneOf:
+          - type: number
+          - type: string
+          - type: object
+        unit_type:
+          type: string
+        data_type_name:
+          type: string
+        configuration_checksum:
+          type: string
+          description: Unique identifier for the Smart Mooring configuration.
+    SensorDataResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        spotterId:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SensorReading'
+  securitySchemes:
+    tokenHeader:
+      type: apiKey
+      in: header
+      name: token
+      description: API token tied to your Sofar account, generated at spotter.sofarocean.com/api.
+    tokenQuery:
+      type: apiKey
+      in: query
+      name: token
+      description: API token passed as a query parameter.
+externalDocs:
+  description: Sofar API documentation
+  url: https://docs.sofarocean.com

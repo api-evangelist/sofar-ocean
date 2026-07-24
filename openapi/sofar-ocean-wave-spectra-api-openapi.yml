@@ -1,0 +1,116 @@
+openapi: 3.1.0
+info:
+  title: Sofar Ocean Spotter & Smart Mooring Devices Wave Spectra API
+  version: '1.0'
+  description: The Spotter & Smart Mooring API gives you access to data transmitted by your Spotter buoys and any attached Smart Mooring sensors via telemetry, plus the Sofar Operational Wave Spectra forecast. Data covers waves, wind, surface temperature, barometric pressure, wave frequency/partition spectra, track position, and subsurface Smart Mooring sensor readings. Transcribed by the API Evangelist enrichment pipeline from the public GitBook documentation; not an official Sofar Ocean specification.
+  contact:
+    name: Sofar Ocean Support
+    url: https://www.sofarocean.com/support
+  termsOfService: https://www.sofarocean.com/legal/terms-of-use
+servers:
+- url: https://api.sofarocean.com
+  description: Production
+security:
+- tokenHeader: []
+- tokenQuery: []
+tags:
+- name: Wave Spectra
+  description: Sofar Operational WaveWatch III wave spectra forecast
+paths:
+  /api/op-wave-spectra:
+    get:
+      tags:
+      - Wave Spectra
+      operationId: listWaveSpectraLocations
+      summary: List operational wave spectra locations
+      description: Returns a list of grid-point locations you have access to for the Sofar Operational Wave Spectra forecast.
+      responses:
+        '200':
+          description: A list of accessible wave spectra grid locations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaveSpectraLocationsResponse'
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+  /api/op-wave-spectra/{lat}/{lon}:
+    get:
+      tags:
+      - Wave Spectra
+      operationId: getWaveSpectra
+      summary: Get operational wave spectra forecast (NetCDF)
+      description: Retrieves NetCDF data containing the variance density spectrum at a single grid point of the Sofar global wave model at hourly resolution for the duration of the forecast.
+      parameters:
+      - name: lat
+        in: path
+        required: true
+        schema:
+          type: number
+        description: Latitude in decimal degrees (0.5 resolution).
+      - name: lon
+        in: path
+        required: true
+        schema:
+          type: number
+        description: Longitude in decimal degrees (0.5 resolution).
+      responses:
+        '200':
+          description: NetCDF spectral data file.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthError'
+components:
+  schemas:
+    WaveSpectraLocationsResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/WaveSpectraLocation'
+    AuthError:
+      type: object
+      description: Authentication error envelope.
+      properties:
+        message:
+          type: string
+          enum:
+          - Authentication Failed
+          - No token provided
+    WaveSpectraLocation:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+        url:
+          type: string
+  securitySchemes:
+    tokenHeader:
+      type: apiKey
+      in: header
+      name: token
+      description: API token tied to your Sofar account, generated at spotter.sofarocean.com/api.
+    tokenQuery:
+      type: apiKey
+      in: query
+      name: token
+      description: API token passed as a query parameter.
+externalDocs:
+  description: Sofar API documentation
+  url: https://docs.sofarocean.com
