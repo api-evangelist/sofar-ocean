@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+source: PyPI + GitHub org github.com/SofarOcean
+packages:
+  - language: python
+    registry: pypi
+    name: pysofar
+    url: https://pypi.org/project/pysofar/
+    install: pip install pysofar
+    official: true
+    repo: https://github.com/wavespotter/wavefleet-client-python
+    description: Python client for interfacing with the Sofar API to access Spotter data.
+  - language: python
+    registry: github
+    name: sofar-api-client-python
+    url: https://github.com/SofarOcean/sofar-api-client-python
+    install: git+https://github.com/SofarOcean/sofar-api-client-python
+    official: true
+    description: Official Python client for the Sofar (Wavefleet) API.
+  - language: javascript
+    registry: github
+    name: sofar-api-client-js
+    url: https://github.com/SofarOcean/sofar-api-client-js
+    install: git+https://github.com/SofarOcean/sofar-api-client-js
+    official: true
+    description: Official TypeScript/JavaScript SDK for the Spotter Sensor API, Marine Weather, and Wave Spectra.
+tools:
+  - language: python
+    registry: github
+    name: spotter-sd-parser
+    url: https://github.com/SofarOcean/spotter-sd-parser
+    official: true
+    description: Open-source tool for concatenating and parsing SD card data from Spotters.

@@ -1,28 +1,178 @@
 aid: sofar-ocean
 name: Sofar Ocean
-description: 'Sofar Ocean is a company surfaced as a portfolio company of foundry-group, union-square-ventures
-  and added to the API Evangelist network as a stub for enrichment. Sector: climate. This profile is a
-  lead awaiting the enrichment pipeline.'
+description: >-
+  Sofar Ocean operates one of the world's largest privately owned networks of
+  real-time ocean weather sensors. Its Spotter buoys and Smart Mooring subsurface
+  sensors stream wave, wind, sea-surface temperature, barometric pressure, and
+  acoustic data via cellular and satellite telemetry, and the Wayfinder platform
+  turns that data into maritime voyage optimization. The Sofar API (Spotter &
+  Smart Mooring plus the Operational Wave Spectra forecast) gives developers
+  token-authenticated access to device telemetry, historical and geospatial data
+  queries, subsurface sensor readings, NetCDF wave-spectra forecasts, and outbound
+  data-forwarding webhooks.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://cdn.prod.website-files.com/64d14310c4accecbf82f0e9f/67eb3186e1334d183e9d2b0e_meta%20image%20sofar%20site-min.jpg
 url: https://raw.githubusercontent.com/api-evangelist/sofar-ocean/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - foundry-group
 - union-square-ventures
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: active
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Climate
-apis: []
+- Ocean Data
+- Weather
+- Maritime
+- Sensors
+- IoT
+- Environmental Data
+- Wave Data
+- Buoys
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: sofar-ocean:sofar-ocean-devices-api
+  name: Sofar Ocean Devices API
+  description: Spotter device discovery
+  humanURL: https://docs.sofarocean.com/spotter-and-smart-mooring
+  baseURL: https://api.sofarocean.com
+  tags:
+  - Devices
+  properties:
+  - type: OpenAPI
+    url: openapi/sofar-ocean-devices-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sofarocean.com
+  - type: APIReference
+    url: https://docs.sofarocean.com/spotter-and-smart-mooring
+  - type: Webhooks
+    url: asyncapi/sofar-ocean-data-forwarding-webhooks.yml
+- aid: sofar-ocean:sofar-ocean-smart-mooring-api
+  name: Sofar Ocean Smart Mooring API
+  description: Data collected by Smart Mooring subsurface sensors
+  humanURL: https://docs.sofarocean.com/spotter-and-smart-mooring
+  baseURL: https://api.sofarocean.com
+  tags:
+  - Smart Mooring
+  properties:
+  - type: OpenAPI
+    url: openapi/sofar-ocean-smart-mooring-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sofarocean.com
+  - type: APIReference
+    url: https://docs.sofarocean.com/spotter-and-smart-mooring
+  - type: Webhooks
+    url: asyncapi/sofar-ocean-data-forwarding-webhooks.yml
+- aid: sofar-ocean:sofar-ocean-spotter-data-api
+  name: Sofar Ocean Spotter Data API
+  description: Data collected by onboard Spotter sensors
+  humanURL: https://docs.sofarocean.com/spotter-and-smart-mooring
+  baseURL: https://api.sofarocean.com
+  tags:
+  - Spotter Data
+  properties:
+  - type: OpenAPI
+    url: openapi/sofar-ocean-spotter-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sofarocean.com
+  - type: APIReference
+    url: https://docs.sofarocean.com/spotter-and-smart-mooring
+  - type: Webhooks
+    url: asyncapi/sofar-ocean-data-forwarding-webhooks.yml
+- aid: sofar-ocean:sofar-ocean-wave-spectra-api
+  name: Sofar Ocean Wave Spectra API
+  description: Sofar Operational WaveWatch III wave spectra forecast
+  humanURL: https://docs.sofarocean.com/spotter-and-smart-mooring
+  baseURL: https://api.sofarocean.com
+  tags:
+  - Wave Spectra
+  properties:
+  - type: OpenAPI
+    url: openapi/sofar-ocean-wave-spectra-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sofarocean.com
+  - type: APIReference
+    url: https://docs.sofarocean.com/spotter-and-smart-mooring
+  - type: Webhooks
+    url: asyncapi/sofar-ocean-data-forwarding-webhooks.yml
 common:
+- type: DomainSecurity
+  url: security/sofar-ocean-domain-security.yml
+- type: DeveloperPortal
+  url: https://docs.sofarocean.com
+- type: Documentation
+  url: https://docs.sofarocean.com
+- type: APIReference
+  url: https://docs.sofarocean.com/spotter-and-smart-mooring
+- type: GettingStarted
+  url: https://docs.sofarocean.com/spotter-and-smart-mooring/test-the-api
+- type: Authentication
+  url: authentication/sofar-ocean-authentication.yml
+- type: AgenticAccess
+  url: agentic-access/sofar-ocean-agentic-access.yml
+- type: LLMsTxt
+  url: llms/sofar-ocean-llms.txt
+- type: Packages
+  url: packages/sofar-ocean-packages.yml
+- type: SDKs
+  url: packages/sofar-ocean-packages.yml
+- type: MCPServer
+  url: mcp/sofar-ocean-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Conventions
+  url: conventions/sofar-ocean-conventions.yml
+- type: ErrorCatalog
+  url: errors/sofar-ocean-problem-types.yml
+- type: DataModel
+  url: data-model/sofar-ocean-data-model.yml
+- type: Conformance
+  url: conformance/sofar-ocean-conformance.yml
+- type: Overlay
+  url: overlays/sofar-ocean-spotter-overlay.yaml
+- type: Webhooks
+  url: asyncapi/sofar-ocean-data-forwarding-webhooks.yml
+- type: Sandbox
+  url: sandbox/sofar-ocean-sandbox.yml
+- type: Lifecycle
+  url: lifecycle/sofar-ocean-lifecycle.yml
+- type: StatusPage
+  url: https://sofarocean.statuspage.io
+- type: Support
+  url: https://www.sofarocean.com/support
+- type: Blog
+  url: https://www.sofarocean.com/posts
+- type: GitHubOrganization
+  url: https://github.com/SofarOcean
+- type: Login
+  url: https://spotter.sofarocean.com/
+- type: TermsOfService
+  url: https://www.sofarocean.com/legal/terms-of-use
+- type: PrivacyPolicy
+  url: https://www.sofarocean.com/legal/privacy-policy
 - type: Website
   url: https://www.sofarocean.com
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v1

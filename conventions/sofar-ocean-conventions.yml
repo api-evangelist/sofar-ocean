@@ -1,0 +1,48 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sofarocean.com
+authentication:
+  style: api-key
+  transport: '`token` HTTP header or `token` query parameter'
+  scope: Account-scoped token granting access to all resources owned by or shared with the account.
+  docs: https://docs.sofarocean.com/readme.md
+  cross_ref: authentication/sofar-ocean-authentication.yml
+idempotency:
+  supported: false
+  notes: >-
+    The documented API is read-only (all GET endpoints); no idempotency-key
+    header or write-side idempotency contract is published. Data Forwarding
+    delivers webhooks but is configured in the dashboard, not via an idempotent
+    write API.
+pagination:
+  style: cursor
+  applies_to: [searchData]
+  request_params: [pageSize]
+  response_fields: [metadata.page.nextPage, metadata.page.hasMoreData, metadata.page.pageSize]
+  notes: >-
+    Time-window endpoints (wave-data, sensor-data) use a `limit` cap (default 20,
+    max 500; 100 when frequencyData is included) rather than cursor pagination.
+time_windows:
+  params: [startDate, endDate]
+  format: ISO 8601 (e.g. 2021-01-01T07:00:00Z)
+  defaults:
+    wave-data endDate: now()
+    sensor-data startDate: 24 hours ago
+    sensor-data endDate: now()
+  shared_device_limit: For Spotters shared but not registered to your account, historical access is limited to the past 30 days.
+field_selection:
+  style: include-flags
+  notes: >-
+    Optional data families are opt-in via boolean include* query parameters
+    (includeWindData, includeSurfaceTempData, includeFrequencyData,
+    includeDirectionalMoments, includePartitionData, includeBarometerData,
+    includeTrack) plus processingSources (embedded|hdr|all).
+error_envelope:
+  auth: '{"message": "<reason>"}'
+  request: '{"status": "error", "message": "<reason>"}'
+  cross_ref: errors/sofar-ocean-problem-types.yml
+rate_limiting:
+  documented: false
+  notes: No rate-limit headers or published quota were found in the docs.
+versioning:
+  cross_ref: lifecycle/sofar-ocean-lifecycle.yml

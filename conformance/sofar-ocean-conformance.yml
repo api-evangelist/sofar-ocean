@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/sofar-ocean-spotter-openapi.yml + https://docs.sofarocean.com
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: API uses a single account-scoped token, not OAuth 2.0.
+  - id: oidc
+    conforms: false
+  - id: api-key-auth
+    conforms: true
+    evidence: Token accepted in `token` header or `token` query parameter.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use plain-JSON envelopes ({message} or {status,message}), not application/problem+json.
+  - id: iso8601-timestamps
+    conforms: true
+    evidence: All date parameters and response timestamps are ISO 8601.
+  - id: rest
+    conforms: true
+    evidence: Resource-oriented HTTP GET endpoints returning JSON (and NetCDF for spectra).
+  - id: cursor-pagination
+    conforms: true
+    evidence: Search endpoint returns metadata.page.nextPage cursor links with hasMoreData.
+  - id: srid-4326
+    conforms: true
+    evidence: Search shapeParams use SRID 4326 (WGS84) lat/lon coordinates.
+  - id: netcdf
+    conforms: true
+    evidence: Wave spectra forecast is delivered as NetCDF (CF-style gridded spectral data).
+  - id: json-api
+    conforms: false
+  - id: fhir-r4
+    conforms: false

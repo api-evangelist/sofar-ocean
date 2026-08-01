@@ -1,0 +1,30 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sofarocean.com/spotter-and-smart-mooring/test-the-api
+notes: >-
+  Sofar publishes a "Test the API" walkthrough with a shared demo API token that
+  returns sample data from a demo account's Spotters. The token value is rendered
+  dynamically on the docs page (GitBook variable space.vars.demo_api_token) and is
+  not reproduced verbatim here to avoid capturing a stale/rotating value. There is
+  no separate test-vs-live host or key prefix scheme; the same production host
+  (api.sofarocean.com) is used with the demo token.
+demo_token:
+  available: true
+  where: https://docs.sofarocean.com/spotter-and-smart-mooring/test-the-api
+  usage: Pass in the `token` header or `token` query parameter, same as a live token.
+  limitations: >-
+    The demo account has no registered Smart Mooring devices, so Sensor Data and
+    Sensor Configuration responses return empty data arrays.
+test_flow:
+  - step: List demo devices
+    call: GET https://api.sofarocean.com/api/devices
+  - step: Get latest data for a demo Spotter
+    call: GET https://api.sofarocean.com/api/latest-data?spotterId=<demo spotterId>
+  - step: Get historical data for a demo Spotter
+    call: GET https://api.sofarocean.com/api/wave-data?spotterId=<demo spotterId>
+example_device_ids_from_docs:
+  ids:
+    - SPOT-0017
+    - SPOT-0018
+    - SPOT-0222
+  note: These are illustrative identifiers used in documentation examples, not guaranteed demo-account devices.

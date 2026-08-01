@@ -1,0 +1,23 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Sofar Ocean Spotter & Smart Mooring API
+  version: 1.0.0
+extends: openapi/sofar-ocean-spotter-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-21'
+      x-apievangelist-provider: sofar-ocean
+      x-api-classification: read-only ocean sensor + weather data
+  - target: $.info
+    update:
+      x-artifacts:
+        errors: errors/sofar-ocean-problem-types.yml
+        conventions: conventions/sofar-ocean-conventions.yml
+        authentication: authentication/sofar-ocean-authentication.yml
+        data-model: data-model/sofar-ocean-data-model.yml
+        webhooks: asyncapi/sofar-ocean-data-forwarding-webhooks.yml
+  - target: $.paths['/api/search'].get
+    update:
+      x-lifecycle: beta
+      x-beta-notice: All input and output parameters are subject to change without notice.

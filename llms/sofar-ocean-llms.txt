@@ -1,0 +1,17 @@
+# Sofar API
+
+## Sofar API
+
+- [Authentication](https://docs.sofarocean.com/readme.md)
+- [Wave Spectra](https://docs.sofarocean.com/wave-spectra.md): The Wave Spectra API provides full spectra 7-day forecast from the Sofar Operational WaveWatch III Model.
+- [Spotter & Smart Mooring](https://docs.sofarocean.com/spotter-and-smart-mooring.md): The Spotter & Smart Mooring API gives you access to data transmitted by your Spotter and any attached Smart Mooring sensors via telemetry.
+- [(GET) Devices](https://docs.sofarocean.com/spotter-and-smart-mooring/fetch-devices.md): Retrieve a list of Spotters associated with your account.
+- [Spotter Data](https://docs.sofarocean.com/spotter-and-smart-mooring/spotter-data.md): Get access to data collected by onboard Spotter sensors.
+- [(GET) Latest Data](https://docs.sofarocean.com/spotter-and-smart-mooring/spotter-data/latest-data.md): Retrieve the latest data from a Spotter.
+- [(GET) Historical Data](https://docs.sofarocean.com/spotter-and-smart-mooring/spotter-data/wave-data.md): Retrieve data from a Spotter for a specified time window.
+- [(GET) Search](https://docs.sofarocean.com/spotter-and-smart-mooring/spotter-data/search.md): Retrieve data from Spotters within an area for a specified time window.
+- [Smart Mooring Data](https://docs.sofarocean.com/spotter-and-smart-mooring/smart-mooring.md): Get access to data collected by Smart Moorings sensors.
+- [(GET) Sensor Data](https://docs.sofarocean.com/spotter-and-smart-mooring/smart-mooring/sensor-data.md): Retrieve Smart Mooring data from a Spotter for a specified time window.
+- [(GET) Sensor Configuration History](https://docs.sofarocean.com/spotter-and-smart-mooring/smart-mooring/sensor-configuration-history.md): Retrieve Smart Mooring sensor configurations from a Spotter for a specified time window.
+- [Test the API](https://docs.sofarocean.com/spotter-and-smart-mooring/test-the-api.md): Try the Spotter & Smart Mooring API for yourself.
+- [Data Forwarding](https://docs.sofarocean.com/spotter-and-smart-mooring/post-forwarding.md): Forward newly generated data to your delivery endpoints via POST requests.

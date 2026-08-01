@@ -1,0 +1,24 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/sofar-ocean-spotter-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  - query
+schemes:
+- name: tokenHeader
+  type: apiKey
+  in: header
+  parameter: token
+  description: API token tied to your Sofar account, generated at spotter.sofarocean.com/api.
+  sources:
+  - openapi/sofar-ocean-spotter-openapi.yml
+- name: tokenQuery
+  type: apiKey
+  in: query
+  parameter: token
+  description: API token passed as a query parameter.
+  sources:
+  - openapi/sofar-ocean-spotter-openapi.yml

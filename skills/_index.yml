@@ -1,0 +1,16 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/sofar-ocean-spotter-openapi.yml
+skills:
+  - file: sofar-ocean-fetch-spotter-data.md
+    name: Fetch latest Spotter data
+    api: openapi/sofar-ocean-spotter-openapi.yml
+    operations: [getDevices, getLatestData]
+  - file: sofar-ocean-historical-and-area-search.md
+    name: Query historical and area-based Spotter data
+    api: openapi/sofar-ocean-spotter-openapi.yml
+    operations: [getWaveData, searchData]
+  - file: sofar-ocean-smart-mooring-sensors.md
+    name: Read Smart Mooring subsurface sensor data
+    api: openapi/sofar-ocean-spotter-openapi.yml
+    operations: [getSensorData, getSensorConfigurationHistory]

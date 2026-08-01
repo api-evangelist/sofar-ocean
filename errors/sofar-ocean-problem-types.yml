@@ -1,0 +1,53 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/sofar-ocean-spotter-openapi.yml + https://docs.sofarocean.com
+format: custom-json
+notes: >-
+  Sofar does not use RFC 9457 problem+json. Errors use one of two plain-JSON
+  envelopes. Authentication errors return {"message": "..."}. Request/validation
+  errors return {"status": "error", "message": "..."}. HTTP status is 400 for
+  bad requests / device-not-found and 401 for auth failures.
+envelopes:
+  - name: auth
+    shape: '{"message": "<reason>"}'
+    used_by_status: [401]
+  - name: request
+    shape: '{"status": "error", "message": "<reason>"}'
+    used_by_status: [400]
+problems:
+  - status: 401
+    envelope: auth
+    message: Authentication Failed
+    meaning: The supplied token is incorrect or invalid.
+    remediation: Regenerate the token at spotter.sofarocean.com/api and retry.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#getDevices
+  - status: 401
+    envelope: auth
+    message: No token provided
+    meaning: No token was supplied in the header or query parameter.
+    remediation: Pass the token in the `token` header or `token` query parameter.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#getDevices
+  - status: 400
+    envelope: request
+    message: Device not found
+    meaning: No Spotter matches the supplied spotterId, or it is not accessible to your account.
+    remediation: Verify the spotterId via the devices endpoint.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#getLatestData
+  - status: 400
+    envelope: request
+    message: Valid radius not found! A valid radius is required when shape is circle
+    meaning: The search shape is circle but no valid radius was supplied.
+    remediation: Provide a numeric radius (meters) when shape=circle.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#searchData
+  - status: 400
+    envelope: request
+    message: Improper amount of lat/lon pairs! There must be exactly N pair(s)
+    meaning: shapeParams has the wrong number of coordinate pairs for the shape (1 for circle, 2 for envelope).
+    remediation: Supply exactly 1 pair for circle or 2 pairs for envelope.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#searchData
+  - status: 400
+    envelope: request
+    message: Invalid parameter startDate. Date value must be provided in ISO 8601 format
+    meaning: A date parameter was missing or not ISO 8601 formatted.
+    remediation: Use ISO 8601 timestamps, e.g. 2021-01-01T07:00:00Z.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#searchData

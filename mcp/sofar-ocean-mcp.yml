@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/sofar-ocean-spotter-openapi.yml
+notes: >-
+  No official hosted or remote MCP server was found for Sofar Ocean. This is a
+  candidate tool surface derived one-to-one from the documented Spotter & Smart
+  Mooring / Wave Spectra API operations. Auth is a single account token passed in
+  the `token` header or query parameter.
+server:
+  name: sofar-ocean
+  transport: stdio
+tools:
+  - name: get_devices
+    description: List Spotters associated with your account.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#getDevices
+  - name: get_latest_data
+    description: Get the most recently transmitted data from a Spotter.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#getLatestData
+  - name: get_wave_data
+    description: Get historical waves and sensor data for a Spotter over a time window.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#getWaveData
+  - name: search_data
+    description: Search Spotter data within a geospatial area over a time window (beta).
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#searchData
+  - name: get_sensor_data
+    description: Get Smart Mooring sensor data for a Spotter over a time window.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#getSensorData
+  - name: get_sensor_configuration_history
+    description: Get Smart Mooring sensor configuration history for a Spotter.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#getSensorConfigurationHistory
+  - name: list_wave_spectra_locations
+    description: List operational wave spectra grid locations you can access.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#listWaveSpectraLocations
+  - name: get_wave_spectra
+    description: Retrieve operational wave spectra forecast (NetCDF) for a grid point.
+    source_operation: openapi/sofar-ocean-spotter-openapi.yml#getWaveSpectra

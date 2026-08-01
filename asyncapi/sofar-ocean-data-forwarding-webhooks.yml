@@ -1,0 +1,28 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sofarocean.com/spotter-and-smart-mooring/post-forwarding
+spec_type: Webhooks
+notes: >-
+  Sofar publishes no AsyncAPI document. It does document a webhook ("Data
+  Forwarding") surface: you register delivery endpoint URLs in the Spotter
+  Dashboard, and Sofar sends an HTTP POST to each endpoint whenever one of your
+  Spotters generates new data. The POST body varies by the Spotter's operating
+  mode. This artifact captures that webhook catalog.
+webhooks:
+  - name: data-forwarding
+    delivery: HTTP POST to subscriber-configured delivery endpoint URLs
+    configured_at: https://spotter.sofarocean.com/api
+    trigger: A Spotter transmits new data.
+    content_type: application/json
+    body_root: data
+    payload_variants:
+      - mode: Waves
+        payloadType: waves
+        includes: [spotterId, spotterName, batteryVoltage, batteryPower, solarVoltage, humidity, waves, track, frequencyData, partitionData, wind, surfaceTemp]
+      - mode: Track
+        payloadType: track
+        includes: [spotterId, spotterName, batteryVoltage, batteryPower, solarVoltage, humidity, track]
+      - mode: Smart Mooring
+        payloadType: sensorData
+        includes: [spotterId, spotterName, batteryVoltage, batteryPower, solarVoltage, humidity, sensorData]
+    schema_ref: openapi/sofar-ocean-spotter-openapi.yml#/components/schemas/SpotterData

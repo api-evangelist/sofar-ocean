@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: searched
+source: probed /.well-known/ on Sofar Ocean hosts
+notes: >-
+  No .well-known discovery documents are published. api.sofarocean.com is not
+  directly probeable (403 at root). On spotter.sofarocean.com every /.well-known/
+  path returns HTTP 200 but serves the SPA dashboard shell (text/html "Spotter
+  Dashboard"), i.e. a soft-404 rather than a real document. docs.sofarocean.com
+  and www.sofarocean.com return hard 404s.
+hosts:
+  - host: https://spotter.sofarocean.com
+    documents:
+      - { path: /.well-known/security.txt, status: 200, present: false, note: soft-404 SPA HTML shell }
+      - { path: /.well-known/openid-configuration, status: 200, present: false, note: soft-404 SPA HTML shell }
+      - { path: /.well-known/oauth-authorization-server, status: 200, present: false, note: soft-404 SPA HTML shell }
+      - { path: /.well-known/api-catalog, status: 200, present: false, note: soft-404 SPA HTML shell }
+      - { path: /.well-known/ai-plugin.json, status: 200, present: false, note: soft-404 SPA HTML shell }
+  - host: https://docs.sofarocean.com
+    documents:
+      - { path: /.well-known/security.txt, status: 404, present: false }
+      - { path: /.well-known/openid-configuration, status: 404, present: false }
+      - { path: /.well-known/oauth-authorization-server, status: 404, present: false }
+      - { path: /.well-known/api-catalog, status: 404, present: false }
+      - { path: /.well-known/ai-plugin.json, status: 404, present: false }
+  - host: https://www.sofarocean.com
+    documents:
+      - { path: /.well-known/security.txt, status: 404, present: false }
+      - { path: /.well-known/openid-configuration, status: 404, present: false }
+      - { path: /.well-known/oauth-authorization-server, status: 404, present: false }
+      - { path: /.well-known/api-catalog, status: 404, present: false }
+      - { path: /.well-known/ai-plugin.json, status: 404, present: false }

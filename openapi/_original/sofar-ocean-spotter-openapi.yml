@@ -1,0 +1,424 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.sofarocean.com/spotter-and-smart-mooring
+openapi: 3.1.0
+info:
+  title: Sofar Ocean Spotter & Smart Mooring API
+  version: '1.0'
+  description: >-
+    The Spotter & Smart Mooring API gives you access to data transmitted by your
+    Spotter buoys and any attached Smart Mooring sensors via telemetry, plus the
+    Sofar Operational Wave Spectra forecast. Data covers waves, wind, surface
+    temperature, barometric pressure, wave frequency/partition spectra, track
+    position, and subsurface Smart Mooring sensor readings. Transcribed by the
+    API Evangelist enrichment pipeline from the public GitBook documentation; not
+    an official Sofar Ocean specification.
+  contact:
+    name: Sofar Ocean Support
+    url: https://www.sofarocean.com/support
+  termsOfService: https://www.sofarocean.com/legal/terms-of-use
+externalDocs:
+  description: Sofar API documentation
+  url: https://docs.sofarocean.com
+servers:
+  - url: https://api.sofarocean.com
+    description: Production
+security:
+  - tokenHeader: []
+  - tokenQuery: []
+tags:
+  - name: Devices
+    description: Spotter device discovery
+  - name: Spotter Data
+    description: Data collected by onboard Spotter sensors
+  - name: Smart Mooring
+    description: Data collected by Smart Mooring subsurface sensors
+  - name: Wave Spectra
+    description: Sofar Operational WaveWatch III wave spectra forecast
+paths:
+  /api/devices:
+    get:
+      tags: [Devices]
+      operationId: getDevices
+      summary: List devices
+      description: >-
+        Retrieve a list containing the display name, Spotter ID, and hull type of
+        any Spotters you have API access to (registered to or shared with your
+        account), ordered by spotterId.
+      parameters:
+        - name: excludeSharedDevices
+          in: query
+          description: Set true to limit the response to Spotters registered directly to your account.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: A list of Spotters associated with the account.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DevicesResponse' }
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuthError' }
+  /api/latest-data:
+    get:
+      tags: [Spotter Data]
+      operationId: getLatestData
+      summary: Get latest data
+      description: >-
+        Returns the most recently transmitted device, waves and sensor data from a
+        Spotter, specified by spotterId.
+      parameters:
+        - { name: spotterId, in: query, required: true, schema: { type: string }, description: The identifier of the device to retrieve information from. }
+        - { name: includeWindData, in: query, required: false, schema: { type: boolean, default: false }, description: Set true to return wind data. }
+        - { name: includeSurfaceTempData, in: query, required: false, schema: { type: boolean, default: false }, description: Set true to return surface temperature data. }
+        - { name: includeDirectionalMoments, in: query, required: false, schema: { type: boolean, default: false }, description: Set true to return directional moments data (Waves Spectrum Full mode). }
+        - { name: includePartitionData, in: query, required: false, schema: { type: boolean, default: false }, description: Set true to return partition data. }
+        - { name: includeBarometerData, in: query, required: false, schema: { type: boolean, default: false }, description: Set true to return barometer data. }
+      responses:
+        '200':
+          description: The latest data sample stream for the Spotter.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SpotterDataResponse' }
+        '400':
+          description: Device not found or invalid parameters.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StatusError' }
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuthError' }
+  /api/wave-data:
+    get:
+      tags: [Spotter Data]
+      operationId: getWaveData
+      summary: Get historical data
+      description: >-
+        Returns waves and sensor data collected and transmitted by a Spotter,
+        specified by spotterId, between startDate and endDate. For Spotters shared
+        but not registered to your account, access is limited to the past 30 days.
+      parameters:
+        - { name: spotterId, in: query, required: true, schema: { type: string }, description: The identifier of the device to retrieve data from. }
+        - { name: limit, in: query, required: false, schema: { type: integer, default: 20, maximum: 500 }, description: Maximum data samples per type (500; 100 when frequencyData is included). }
+        - { name: startDate, in: query, required: false, schema: { type: string, format: date-time }, description: ISO 8601 start date for data inclusion. }
+        - { name: endDate, in: query, required: false, schema: { type: string, format: date-time }, description: ISO 8601 end date for data inclusion (defaults to now). }
+        - { name: includeWaves, in: query, required: false, schema: { type: boolean, default: true }, description: Set false to omit waves data. }
+        - { name: includeWindData, in: query, required: false, schema: { type: boolean, default: false } }
+        - { name: includeSurfaceTempData, in: query, required: false, schema: { type: boolean, default: false } }
+        - { name: includeFrequencyData, in: query, required: false, schema: { type: boolean, default: false } }
+        - { name: includeDirectionalMoments, in: query, required: false, schema: { type: boolean, default: false } }
+        - { name: includePartitionData, in: query, required: false, schema: { type: boolean, default: false } }
+        - { name: includeBarometerData, in: query, required: false, schema: { type: boolean, default: false } }
+        - { name: includeTrack, in: query, required: false, schema: { type: boolean, default: false } }
+        - { name: processingSources, in: query, required: false, schema: { type: string, enum: [embedded, hdr, all], default: embedded }, description: Data processing source. }
+      responses:
+        '200':
+          description: A data stream for the specified time window.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SpotterDataResponse' }
+        '400':
+          description: Device not found or invalid parameters.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StatusError' }
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuthError' }
+  /api/search:
+    get:
+      tags: [Spotter Data]
+      operationId: searchData
+      summary: Search data by area (beta)
+      description: >-
+        Returns data from all Spotters registered to your account within the
+        specified geospatial area between startDate and endDate. Beta endpoint;
+        input and output parameters are subject to change without notice.
+      parameters:
+        - { name: shape, in: query, required: true, schema: { type: string, enum: [circle, envelope] }, description: The shape of the geospatial area. }
+        - { name: shapeParams, in: query, required: true, schema: { type: string }, description: 'Comma-separated SRID 4326 coordinates (lat,lon). One pair for circle, two for envelope.' }
+        - { name: startDate, in: query, required: true, schema: { type: string, format: date-time }, description: ISO 8601 start date. }
+        - { name: endDate, in: query, required: true, schema: { type: string, format: date-time }, description: ISO 8601 end date. }
+        - { name: pageSize, in: query, required: false, schema: { type: integer, default: 500 }, description: Desired number of samples returned. }
+        - { name: radius, in: query, required: false, schema: { type: number }, description: Radius in meters (required when shape is circle). }
+      responses:
+        '200':
+          description: A paged data stream within the area and time window.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SearchResponse' }
+        '400':
+          description: Missing radius, improper shapeParams, or invalid date.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StatusError' }
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuthError' }
+  /api/sensor-data:
+    get:
+      tags: [Smart Mooring]
+      operationId: getSensorData
+      summary: Get Smart Mooring sensor data
+      description: >-
+        Returns Smart Mooring sensor data collected and transmitted by a Spotter,
+        specified by spotterId, between startDate and endDate.
+      parameters:
+        - { name: spotterId, in: query, required: true, schema: { type: string }, description: The Spotter ID of the device to retrieve data from. }
+        - { name: startDate, in: query, required: false, schema: { type: string, format: date-time }, description: ISO 8601 start date (defaults to 24 hours ago). }
+        - { name: endDate, in: query, required: false, schema: { type: string, format: date-time }, description: ISO 8601 end date (defaults to now). }
+        - { name: includeSoundPressureReadings, in: query, required: false, schema: { type: boolean, default: false }, description: Set true to return sound pressure level (SPL) readings from hydrophone Spotters via cellular. }
+      responses:
+        '200':
+          description: A flat data stream of Smart Mooring sensor transmissions.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SensorDataResponse' }
+        '400':
+          description: Device not found.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StatusError' }
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuthError' }
+  /api/sensor-configuration-history:
+    get:
+      tags: [Smart Mooring]
+      operationId: getSensorConfigurationHistory
+      summary: Get Smart Mooring sensor configuration history
+      description: >-
+        Retrieve Smart Mooring sensor configurations from a Spotter for a specified
+        time window. Configurations can be cross-referenced with the
+        configuration_checksum returned by the Sensor Data endpoint.
+      parameters:
+        - { name: spotterId, in: query, required: true, schema: { type: string }, description: The Spotter ID of the device to retrieve configurations from. }
+        - { name: startDate, in: query, required: false, schema: { type: string, format: date-time }, description: ISO 8601 start date for the configuration window. }
+        - { name: endDate, in: query, required: false, schema: { type: string, format: date-time }, description: ISO 8601 end date for the configuration window. }
+      responses:
+        '200':
+          description: A list of Smart Mooring sensor configurations for the time window.
+        '400':
+          description: Device not found.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StatusError' }
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuthError' }
+  /api/op-wave-spectra:
+    get:
+      tags: [Wave Spectra]
+      operationId: listWaveSpectraLocations
+      summary: List operational wave spectra locations
+      description: >-
+        Returns a list of grid-point locations you have access to for the Sofar
+        Operational Wave Spectra forecast.
+      responses:
+        '200':
+          description: A list of accessible wave spectra grid locations.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/WaveSpectraLocationsResponse' }
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuthError' }
+  /api/op-wave-spectra/{lat}/{lon}:
+    get:
+      tags: [Wave Spectra]
+      operationId: getWaveSpectra
+      summary: Get operational wave spectra forecast (NetCDF)
+      description: >-
+        Retrieves NetCDF data containing the variance density spectrum at a single
+        grid point of the Sofar global wave model at hourly resolution for the
+        duration of the forecast.
+      parameters:
+        - { name: lat, in: path, required: true, schema: { type: number }, description: 'Latitude in decimal degrees (0.5 resolution).' }
+        - { name: lon, in: path, required: true, schema: { type: number }, description: 'Longitude in decimal degrees (0.5 resolution).' }
+      responses:
+        '200':
+          description: NetCDF spectral data file.
+          content:
+            application/octet-stream:
+              schema: { type: string, format: binary }
+        '401':
+          description: Authentication failed or no token provided.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuthError' }
+components:
+  securitySchemes:
+    tokenHeader:
+      type: apiKey
+      in: header
+      name: token
+      description: API token tied to your Sofar account, generated at spotter.sofarocean.com/api.
+    tokenQuery:
+      type: apiKey
+      in: query
+      name: token
+      description: API token passed as a query parameter.
+  schemas:
+    Device:
+      type: object
+      properties:
+        spotterId: { type: string, description: The Spotter's identifier. }
+        name: { type: [string, 'null'], description: Display name, or null if unset. }
+        hullType: { type: string, enum: [spotter, scout, velella], description: The Spotter's hull type. }
+    DevicesResponse:
+      type: object
+      properties:
+        message: { type: string }
+        data:
+          type: object
+          properties:
+            devices:
+              type: array
+              items: { $ref: '#/components/schemas/Device' }
+    WaveSample:
+      type: object
+      properties:
+        significantWaveHeight: { type: number, description: Bulk significant wave height in meters. }
+        peakPeriod: { type: number, description: Peak wave period in seconds. }
+        meanPeriod: { type: number, description: Mean wave period in seconds. }
+        peakDirection: { type: number, description: Peak wave direction in degrees. }
+        peakDirectionalSpread: { type: number, description: Peak wave directional spreading in degrees. }
+        meanDirection: { type: number, description: Mean wave direction in degrees. }
+        meanDirectionalSpread: { type: number, description: Mean wave directional spreading in degrees. }
+        timestamp: { type: string, format: date-time }
+        latitude: { type: number }
+        longitude: { type: number }
+    WindSample:
+      type: object
+      properties:
+        speed: { type: number, description: Wind speed in meters per second. }
+        direction: { type: number, description: Wind direction in degrees. }
+        seasurfaceId: { type: integer, description: '1 glassy, 2 choppy, 3 rough.' }
+        algorithm_version: { type: integer, description: Wind algorithm version. }
+    SurfaceTempSample:
+      type: object
+      properties:
+        degrees: { type: number, description: Surface temperature in degrees. }
+    BarometerSample:
+      type: object
+      properties:
+        value: { type: number }
+        units: { type: string, description: 'e.g. hPa' }
+        unit_type: { type: string, description: 'e.g. barometric_pressure' }
+        data_type_name: { type: string, description: 'e.g. sofar_meanbaropressure_13bits' }
+    TrackSample:
+      type: object
+      properties:
+        latitude: { type: number }
+        longitude: { type: number }
+        timestamp: { type: string, format: date-time }
+    Partition:
+      type: object
+      properties:
+        startFrequency: { type: number }
+        endFrequency: { type: number }
+        significantWaveHeight: { type: number }
+        meanPeriod: { type: number }
+        meanDirection: { type: number }
+        meanDirectionalSpread: { type: number }
+    SpotterData:
+      type: object
+      properties:
+        spotterId: { type: string }
+        spotterName: { type: string }
+        payloadType: { type: string, enum: [waves, sensorData, full, track], description: The type of payload. }
+        batteryVoltage: { type: number }
+        batteryPower: { type: number }
+        solarVoltage: { type: number }
+        humidity: { type: number, description: Internal relative humidity percentage. }
+        commSource: { type: string, enum: [cellular, satellite], description: Telemetry source. }
+        waves: { type: array, items: { $ref: '#/components/schemas/WaveSample' } }
+        wind: { type: array, items: { $ref: '#/components/schemas/WindSample' } }
+        surfaceTemp: { type: array, items: { $ref: '#/components/schemas/SurfaceTempSample' } }
+        barometerData: { type: array, items: { $ref: '#/components/schemas/BarometerSample' } }
+        track: { type: array, items: { $ref: '#/components/schemas/TrackSample' } }
+    SpotterDataResponse:
+      type: object
+      properties:
+        data: { $ref: '#/components/schemas/SpotterData' }
+    SensorReading:
+      type: object
+      properties:
+        latitude: { type: number }
+        longitude: { type: number }
+        timestamp: { type: string, format: date-time }
+        sensorPosition: { type: integer, description: Sensor physical position (1 closest to Spotter). }
+        units: { type: string }
+        value:
+          description: The measured value.
+          oneOf:
+            - { type: number }
+            - { type: string }
+            - { type: object }
+        unit_type: { type: string }
+        data_type_name: { type: string }
+        configuration_checksum: { type: string, description: Unique identifier for the Smart Mooring configuration. }
+    SensorDataResponse:
+      type: object
+      properties:
+        status: { type: string }
+        spotterId: { type: string }
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/SensorReading' }
+    SearchResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items: { type: object }
+        metadata:
+          type: object
+          properties:
+            page:
+              type: object
+              properties:
+                nextPage: { type: string }
+                hasMoreData: { type: boolean }
+                pageSize: { type: integer }
+    WaveSpectraLocation:
+      type: object
+      properties:
+        latitude: { type: number }
+        longitude: { type: number }
+        url: { type: string }
+    WaveSpectraLocationsResponse:
+      type: object
+      properties:
+        status: { type: string }
+        data:
+          type: array
+          items: { $ref: '#/components/schemas/WaveSpectraLocation' }
+    AuthError:
+      type: object
+      description: Authentication error envelope.
+      properties:
+        message: { type: string, enum: ['Authentication Failed', 'No token provided'] }
+    StatusError:
+      type: object
+      description: Request error envelope.
+      properties:
+        status: { type: string, enum: [error] }
+        message: { type: string }

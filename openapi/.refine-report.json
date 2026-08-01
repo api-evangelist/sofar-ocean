@@ -1,0 +1,20 @@
+{
+  "provider": "sofar-ocean",
+  "sources": [
+    "sofar-ocean-devices-api-openapi.yml",
+    "sofar-ocean-smart-mooring-api-openapi.yml",
+    "sofar-ocean-spotter-data-api-openapi.yml",
+    "sofar-ocean-wave-spectra-api-openapi.yml"
+  ],
+  "outputs": [
+    "sofar-ocean-devices-api-openapi.yml",
+    "sofar-ocean-smart-mooring-api-openapi.yml",
+    "sofar-ocean-spotter-data-api-openapi.yml",
+    "sofar-ocean-wave-spectra-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

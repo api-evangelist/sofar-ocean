@@ -1,0 +1,39 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/sofar-ocean-spotter-openapi.yml + https://docs.sofarocean.com
+entities:
+  - name: Device
+    id: spotterId
+    id_format: 'SPOT-<alphanumeric> (e.g. SPOT-0018)'
+    description: A Spotter buoy registered to or shared with your account.
+    fields: [spotterId, name, hullType]
+    hull_types: [spotter, scout, velella]
+  - name: SpotterData
+    belongs_to: Device (via spotterId)
+    description: A telemetry payload transmitted by a Spotter; payloadType is waves, sensorData, full, or track.
+    has_many:
+      - waves (WaveSample)
+      - wind (WindSample)
+      - surfaceTemp (SurfaceTempSample)
+      - barometerData (BarometerSample)
+      - frequencyData (spectral)
+      - partitionData (Partition)
+      - track (TrackSample)
+  - name: SmartMooringSensorReading
+    belongs_to: Device (via spotterId)
+    description: A subsurface Smart Mooring sensor sample.
+    fields: [sensorPosition, units, value, unit_type, data_type_name, configuration_checksum, timestamp, latitude, longitude]
+    references: SmartMooringConfiguration (via configuration_checksum)
+  - name: SmartMooringConfiguration
+    id: configuration_checksum
+    id_format: 'hex (e.g. 0x03696310)'
+    description: A Smart Mooring sensor configuration, retrievable from the configuration-history endpoint and cross-referenced from sensor readings.
+  - name: WaveSpectraLocation
+    id: 'latitude/longitude grid point (0.5 resolution)'
+    description: A grid point of the Sofar global wave model with an accessible NetCDF spectral forecast.
+relationships:
+  - { from: SpotterData, to: Device, type: belongs_to, via: spotterId }
+  - { from: SmartMooringSensorReading, to: Device, type: belongs_to, via: spotterId }
+  - { from: SmartMooringSensorReading, to: SmartMooringConfiguration, type: belongs_to, via: configuration_checksum }
+  - { from: Device, to: SpotterData, type: has_many, via: spotterId }
+  - { from: Device, to: SmartMooringSensorReading, type: has_many, via: spotterId }
