@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sofar Ocean Spotter & Smart Mooring Devices Wave Spectra API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Wave Spectra",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List operational wave spectra locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sofarocean.com/api/op-wave-spectra"
+          },
+          "docs": "Returns a list of grid-point locations you have access to for the Sofar Operational Wave Spectra forecast."
+        },
+        {
+          "info": {
+            "name": "Get operational wave spectra forecast (NetCDF)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sofarocean.com/api/op-wave-spectra/:lat/:lon",
+            "params": [
+              {
+                "name": "lat",
+                "value": "",
+                "type": "path",
+                "description": "Latitude in decimal degrees (0.5 resolution)."
+              },
+              {
+                "name": "lon",
+                "value": "",
+                "type": "path",
+                "description": "Longitude in decimal degrees (0.5 resolution)."
+              }
+            ]
+          },
+          "docs": "Retrieves NetCDF data containing the variance density spectrum at a single grid point of the Sofar global wave model at hourly resolution for the duration of the forecast."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

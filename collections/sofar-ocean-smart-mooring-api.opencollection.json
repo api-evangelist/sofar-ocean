@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sofar Ocean Spotter & Devices Smart Mooring API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Smart Mooring",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Smart Mooring sensor data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sofarocean.com/api/sensor-data",
+            "params": [
+              {
+                "name": "spotterId",
+                "value": "",
+                "type": "query",
+                "description": "The Spotter ID of the device to retrieve data from."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 start date (defaults to 24 hours ago)."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 end date (defaults to now)."
+              },
+              {
+                "name": "includeSoundPressureReadings",
+                "value": "",
+                "type": "query",
+                "description": "Set true to return sound pressure level (SPL) readings from hydrophone Spotters via cellular."
+              }
+            ]
+          },
+          "docs": "Returns Smart Mooring sensor data collected and transmitted by a Spotter, specified by spotterId, between startDate and endDate."
+        },
+        {
+          "info": {
+            "name": "Get Smart Mooring sensor configuration history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sofarocean.com/api/sensor-configuration-history",
+            "params": [
+              {
+                "name": "spotterId",
+                "value": "",
+                "type": "query",
+                "description": "The Spotter ID of the device to retrieve configurations from."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 start date for the configuration window."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 end date for the configuration window."
+              }
+            ]
+          },
+          "docs": "Retrieve Smart Mooring sensor configurations from a Spotter for a specified time window. Configurations can be cross-referenced with the configuration_checksum returned by the Sensor Data endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,208 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sofar Ocean Spotter & Smart Mooring Devices Spotter Data API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Spotter Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get latest data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sofarocean.com/api/latest-data",
+            "params": [
+              {
+                "name": "spotterId",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the device to retrieve information from."
+              },
+              {
+                "name": "includeWindData",
+                "value": "",
+                "type": "query",
+                "description": "Set true to return wind data."
+              },
+              {
+                "name": "includeSurfaceTempData",
+                "value": "",
+                "type": "query",
+                "description": "Set true to return surface temperature data."
+              },
+              {
+                "name": "includeDirectionalMoments",
+                "value": "",
+                "type": "query",
+                "description": "Set true to return directional moments data (Waves Spectrum Full mode)."
+              },
+              {
+                "name": "includePartitionData",
+                "value": "",
+                "type": "query",
+                "description": "Set true to return partition data."
+              },
+              {
+                "name": "includeBarometerData",
+                "value": "",
+                "type": "query",
+                "description": "Set true to return barometer data."
+              }
+            ]
+          },
+          "docs": "Returns the most recently transmitted device, waves and sensor data from a Spotter, specified by spotterId."
+        },
+        {
+          "info": {
+            "name": "Get historical data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sofarocean.com/api/wave-data",
+            "params": [
+              {
+                "name": "spotterId",
+                "value": "",
+                "type": "query",
+                "description": "The identifier of the device to retrieve data from."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum data samples per type (500; 100 when frequencyData is included)."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 start date for data inclusion."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 end date for data inclusion (defaults to now)."
+              },
+              {
+                "name": "includeWaves",
+                "value": "",
+                "type": "query",
+                "description": "Set false to omit waves data."
+              },
+              {
+                "name": "includeWindData",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeSurfaceTempData",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeFrequencyData",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeDirectionalMoments",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includePartitionData",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeBarometerData",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeTrack",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "processingSources",
+                "value": "",
+                "type": "query",
+                "description": "Data processing source."
+              }
+            ]
+          },
+          "docs": "Returns waves and sensor data collected and transmitted by a Spotter, specified by spotterId, between startDate and endDate. For Spotters shared but not registered to your account, access is limited to the past 30 days."
+        },
+        {
+          "info": {
+            "name": "Search data by area (beta)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sofarocean.com/api/search",
+            "params": [
+              {
+                "name": "shape",
+                "value": "",
+                "type": "query",
+                "description": "The shape of the geospatial area."
+              },
+              {
+                "name": "shapeParams",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated SRID 4326 coordinates (lat,lon). One pair for circle, two for envelope."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 start date."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "ISO 8601 end date."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Desired number of samples returned."
+              },
+              {
+                "name": "radius",
+                "value": "",
+                "type": "query",
+                "description": "Radius in meters (required when shape is circle)."
+              }
+            ]
+          },
+          "docs": "Returns data from all Spotters registered to your account within the specified geospatial area between startDate and endDate. Beta endpoint; input and output parameters are subject to change without notice."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,515 @@
+{
+  "item": [
+    {
+      "id": "ec32768e-36de-451d-948d-2f8865c47686",
+      "name": "Smart Mooring",
+      "description": {
+        "content": "Data collected by Smart Mooring subsurface sensors",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "25da6846-3163-4442-99fb-0a098e9489db",
+          "name": "Get Smart Mooring sensor data",
+          "request": {
+            "name": "Get Smart Mooring sensor data",
+            "description": {
+              "content": "Returns Smart Mooring sensor data collected and transmitted by a Spotter, specified by spotterId, between startDate and endDate.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "sensor-data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "spotterId",
+                  "value": "<string>",
+                  "description": "(Required) The Spotter ID of the device to retrieve data from."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 start date (defaults to 24 hours ago)."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 end date (defaults to now)."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeSoundPressureReadings",
+                  "value": "false",
+                  "description": "Set true to return sound pressure level (SPL) readings from hydrophone Spotters via cellular."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "37bc1a38-c092-4d53-a954-d5ada6f0728f",
+              "name": "A flat data stream of Smart Mooring sensor transmissions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "sensor-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "includeSoundPressureReadings",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"spotterId\": \"string\",\n  \"data\": [\n    {\n      \"latitude\": 5457.037585345913,\n      \"longitude\": 4765.350567733349,\n      \"timestamp\": \"1969-01-05T13:53:01.972Z\",\n      \"sensorPosition\": 5799,\n      \"units\": \"string\",\n      \"value\": 4272.297586015993,\n      \"unit_type\": \"string\",\n      \"data_type_name\": \"string\",\n      \"configuration_checksum\": \"string\"\n    },\n    {\n      \"latitude\": 1789.7298484638347,\n      \"longitude\": 1251.3062457522162,\n      \"timestamp\": \"2024-02-20T17:10:22.405Z\",\n      \"sensorPosition\": 106,\n      \"units\": \"string\",\n      \"value\": 1732.7289635451648,\n      \"unit_type\": \"string\",\n      \"data_type_name\": \"string\",\n      \"configuration_checksum\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "126422a9-3597-49be-ae58-c54416cede17",
+              "name": "Device not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "sensor-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "includeSoundPressureReadings",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80aed8d0-1067-44b0-b654-d4e064cfd5e7",
+              "name": "Authentication failed or no token provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "sensor-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "includeSoundPressureReadings",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Authentication Failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49a6c8b9-6878-45c9-bc36-8858b2974272",
+          "name": "Get Smart Mooring sensor configuration history",
+          "request": {
+            "name": "Get Smart Mooring sensor configuration history",
+            "description": {
+              "content": "Retrieve Smart Mooring sensor configurations from a Spotter for a specified time window. Configurations can be cross-referenced with the configuration_checksum returned by the Sensor Data endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "sensor-configuration-history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "spotterId",
+                  "value": "<string>",
+                  "description": "(Required) The Spotter ID of the device to retrieve configurations from."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 start date for the configuration window."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 end date for the configuration window."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9d67aa0b-9cc5-4ef3-8933-4f64451baedb",
+              "name": "A list of Smart Mooring sensor configurations for the time window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "sensor-configuration-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc4035f6-b9ec-4645-ba0c-5ce0757ee9fd",
+              "name": "Device not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "sensor-configuration-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29349ceb-6296-45dd-9737-6db045045162",
+              "name": "Authentication failed or no token provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "sensor-configuration-history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Authentication Failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sofarocean.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c993aa28-fb28-4458-9eb3-3fd0b8433cbc",
+    "name": "Sofar Ocean Spotter & Devices Smart Mooring API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spotter & Smart Mooring API gives you access to data transmitted by your Spotter buoys and any attached Smart Mooring sensors via telemetry, plus the Sofar Operational Wave Spectra forecast. Data covers waves, wind, surface temperature, barometric pressure, wave frequency/partition spectra, track position, and subsurface Smart Mooring sensor readings. Transcribed by the API Evangelist enrichment pipeline from the public GitBook documentation; not an official Sofar Ocean specification.\n\nContact Support:\n Name: Sofar Ocean Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Sofar Ocean Spotter & Smart Mooring Devices API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "token",
+      "value": "{{token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Devices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sofarocean.com/api/devices",
+            "params": [
+              {
+                "name": "excludeSharedDevices",
+                "value": "",
+                "type": "query",
+                "description": "Set true to limit the response to Spotters registered directly to your account."
+              }
+            ]
+          },
+          "docs": "Retrieve a list containing the display name, Spotter ID, and hull type of any Spotters you have API access to (registered to or shared with your account), ordered by spotterId."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

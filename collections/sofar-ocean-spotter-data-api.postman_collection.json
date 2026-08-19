@@ -1,0 +1,1008 @@
+{
+  "item": [
+    {
+      "id": "b2bbb2f1-62cd-4066-a6e1-0bc2afc07484",
+      "name": "Spotter Data",
+      "description": {
+        "content": "Data collected by onboard Spotter sensors",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "90278f8b-eacd-445c-a0e6-7cd217c2322e",
+          "name": "Get latest data",
+          "request": {
+            "name": "Get latest data",
+            "description": {
+              "content": "Returns the most recently transmitted device, waves and sensor data from a Spotter, specified by spotterId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "latest-data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "spotterId",
+                  "value": "<string>",
+                  "description": "(Required) The identifier of the device to retrieve information from."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeWindData",
+                  "value": "false",
+                  "description": "Set true to return wind data."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeSurfaceTempData",
+                  "value": "false",
+                  "description": "Set true to return surface temperature data."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeDirectionalMoments",
+                  "value": "false",
+                  "description": "Set true to return directional moments data (Waves Spectrum Full mode)."
+                },
+                {
+                  "disabled": false,
+                  "key": "includePartitionData",
+                  "value": "false",
+                  "description": "Set true to return partition data."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeBarometerData",
+                  "value": "false",
+                  "description": "Set true to return barometer data."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c7bd7e46-a4f1-48e3-8956-6fe7313d89a6",
+              "name": "The latest data sample stream for the Spotter.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "latest-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeWindData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeSurfaceTempData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeDirectionalMoments",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includePartitionData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeBarometerData",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"spotterId\": \"string\",\n    \"spotterName\": \"string\",\n    \"payloadType\": \"sensorData\",\n    \"batteryVoltage\": 6195.967352481002,\n    \"batteryPower\": 9180.998212614157,\n    \"solarVoltage\": 9751.628566527555,\n    \"humidity\": 9068.666159059088,\n    \"commSource\": \"cellular\",\n    \"waves\": [\n      {\n        \"significantWaveHeight\": 7371.959243106837,\n        \"peakPeriod\": 5075.665850829319,\n        \"meanPeriod\": 9750.12505534049,\n        \"peakDirection\": 1721.685242737564,\n        \"peakDirectionalSpread\": 536.1462643044234,\n        \"meanDirection\": 430.58464694536224,\n        \"meanDirectionalSpread\": 578.633649119632,\n        \"timestamp\": \"1973-06-15T20:24:49.462Z\",\n        \"latitude\": 8467.996762154702,\n        \"longitude\": 8369.03134897645\n      },\n      {\n        \"significantWaveHeight\": 4204.125126728982,\n        \"peakPeriod\": 3736.699694699186,\n        \"meanPeriod\": 4071.0512538278,\n        \"peakDirection\": 5313.958695537858,\n        \"peakDirectionalSpread\": 9706.769646192632,\n        \"meanDirection\": 4777.417272060128,\n        \"meanDirectionalSpread\": 6888.013412041268,\n        \"timestamp\": \"1969-12-10T17:08:50.921Z\",\n        \"latitude\": 9818.836087686932,\n        \"longitude\": 7389.678424813177\n      }\n    ],\n    \"wind\": [\n      {\n        \"speed\": 5919.3369908416535,\n        \"direction\": 8924.490845669381,\n        \"seasurfaceId\": 2350,\n        \"algorithm_version\": 4327\n      },\n      {\n        \"speed\": 3291.3387979947993,\n        \"direction\": 2849.352364548503,\n        \"seasurfaceId\": 8924,\n        \"algorithm_version\": 1309\n      }\n    ],\n    \"surfaceTemp\": [\n      {\n        \"degrees\": 9480.277150844104\n      },\n      {\n        \"degrees\": 2273.3839837836877\n      }\n    ],\n    \"barometerData\": [\n      {\n        \"value\": 3110.830440818515,\n        \"units\": \"string\",\n        \"unit_type\": \"string\",\n        \"data_type_name\": \"string\"\n      },\n      {\n        \"value\": 6939.946066113707,\n        \"units\": \"string\",\n        \"unit_type\": \"string\",\n        \"data_type_name\": \"string\"\n      }\n    ],\n    \"track\": [\n      {\n        \"latitude\": 8192.03996460104,\n        \"longitude\": 3444.692999824115,\n        \"timestamp\": \"1974-10-14T04:00:48.428Z\"\n      },\n      {\n        \"latitude\": 6360.339485312613,\n        \"longitude\": 1248.629292710356,\n        \"timestamp\": \"1950-03-07T09:10:50.339Z\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e29a6c6-432b-4831-afa8-6c65ac8bc20b",
+              "name": "Device not found or invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "latest-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeWindData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeSurfaceTempData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeDirectionalMoments",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includePartitionData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeBarometerData",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1d15f8a-fdb5-4935-8163-fed6fcf62341",
+              "name": "Authentication failed or no token provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "latest-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeWindData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeSurfaceTempData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeDirectionalMoments",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includePartitionData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeBarometerData",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No token provided\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db050c30-3600-4cac-81d0-da1d5537e4a9",
+          "name": "Get historical data",
+          "request": {
+            "name": "Get historical data",
+            "description": {
+              "content": "Returns waves and sensor data collected and transmitted by a Spotter, specified by spotterId, between startDate and endDate. For Spotters shared but not registered to your account, access is limited to the past 30 days.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "wave-data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "spotterId",
+                  "value": "<string>",
+                  "description": "(Required) The identifier of the device to retrieve data from."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Maximum data samples per type (500; 100 when frequencyData is included)."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 start date for data inclusion."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<dateTime>",
+                  "description": "ISO 8601 end date for data inclusion (defaults to now)."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeWaves",
+                  "value": "true",
+                  "description": "Set false to omit waves data."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeWindData",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeSurfaceTempData",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeFrequencyData",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeDirectionalMoments",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "includePartitionData",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeBarometerData",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeTrack",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "processingSources",
+                  "value": "embedded",
+                  "description": "Data processing source."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0bd4fa0c-ce0a-4d9a-8376-90863a8bfa0a",
+              "name": "A data stream for the specified time window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "wave-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "includeWaves",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeWindData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeSurfaceTempData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeFrequencyData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeDirectionalMoments",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includePartitionData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeBarometerData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeTrack",
+                      "value": "false"
+                    },
+                    {
+                      "key": "processingSources",
+                      "value": "embedded"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"spotterId\": \"string\",\n    \"spotterName\": \"string\",\n    \"payloadType\": \"sensorData\",\n    \"batteryVoltage\": 6195.967352481002,\n    \"batteryPower\": 9180.998212614157,\n    \"solarVoltage\": 9751.628566527555,\n    \"humidity\": 9068.666159059088,\n    \"commSource\": \"cellular\",\n    \"waves\": [\n      {\n        \"significantWaveHeight\": 7371.959243106837,\n        \"peakPeriod\": 5075.665850829319,\n        \"meanPeriod\": 9750.12505534049,\n        \"peakDirection\": 1721.685242737564,\n        \"peakDirectionalSpread\": 536.1462643044234,\n        \"meanDirection\": 430.58464694536224,\n        \"meanDirectionalSpread\": 578.633649119632,\n        \"timestamp\": \"1973-06-15T20:24:49.462Z\",\n        \"latitude\": 8467.996762154702,\n        \"longitude\": 8369.03134897645\n      },\n      {\n        \"significantWaveHeight\": 4204.125126728982,\n        \"peakPeriod\": 3736.699694699186,\n        \"meanPeriod\": 4071.0512538278,\n        \"peakDirection\": 5313.958695537858,\n        \"peakDirectionalSpread\": 9706.769646192632,\n        \"meanDirection\": 4777.417272060128,\n        \"meanDirectionalSpread\": 6888.013412041268,\n        \"timestamp\": \"1969-12-10T17:08:50.921Z\",\n        \"latitude\": 9818.836087686932,\n        \"longitude\": 7389.678424813177\n      }\n    ],\n    \"wind\": [\n      {\n        \"speed\": 5919.3369908416535,\n        \"direction\": 8924.490845669381,\n        \"seasurfaceId\": 2350,\n        \"algorithm_version\": 4327\n      },\n      {\n        \"speed\": 3291.3387979947993,\n        \"direction\": 2849.352364548503,\n        \"seasurfaceId\": 8924,\n        \"algorithm_version\": 1309\n      }\n    ],\n    \"surfaceTemp\": [\n      {\n        \"degrees\": 9480.277150844104\n      },\n      {\n        \"degrees\": 2273.3839837836877\n      }\n    ],\n    \"barometerData\": [\n      {\n        \"value\": 3110.830440818515,\n        \"units\": \"string\",\n        \"unit_type\": \"string\",\n        \"data_type_name\": \"string\"\n      },\n      {\n        \"value\": 6939.946066113707,\n        \"units\": \"string\",\n        \"unit_type\": \"string\",\n        \"data_type_name\": \"string\"\n      }\n    ],\n    \"track\": [\n      {\n        \"latitude\": 8192.03996460104,\n        \"longitude\": 3444.692999824115,\n        \"timestamp\": \"1974-10-14T04:00:48.428Z\"\n      },\n      {\n        \"latitude\": 6360.339485312613,\n        \"longitude\": 1248.629292710356,\n        \"timestamp\": \"1950-03-07T09:10:50.339Z\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b37f0d0c-be68-4a31-864b-2366b7643a90",
+              "name": "Device not found or invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "wave-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "includeWaves",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeWindData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeSurfaceTempData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeFrequencyData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeDirectionalMoments",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includePartitionData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeBarometerData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeTrack",
+                      "value": "false"
+                    },
+                    {
+                      "key": "processingSources",
+                      "value": "embedded"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0d5cc03-079a-4e95-ae70-51e3f98cc6af",
+              "name": "Authentication failed or no token provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "wave-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "spotterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "includeWaves",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeWindData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeSurfaceTempData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeFrequencyData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeDirectionalMoments",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includePartitionData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeBarometerData",
+                      "value": "false"
+                    },
+                    {
+                      "key": "includeTrack",
+                      "value": "false"
+                    },
+                    {
+                      "key": "processingSources",
+                      "value": "embedded"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No token provided\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81b492f1-e075-4005-981e-62c9b37aced3",
+          "name": "Search data by area (beta)",
+          "request": {
+            "name": "Search data by area (beta)",
+            "description": {
+              "content": "Returns data from all Spotters registered to your account within the specified geospatial area between startDate and endDate. Beta endpoint; input and output parameters are subject to change without notice.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "shape",
+                  "value": "<string>",
+                  "description": "(Required) The shape of the geospatial area."
+                },
+                {
+                  "disabled": false,
+                  "key": "shapeParams",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated SRID 4326 coordinates (lat,lon). One pair for circle, two for envelope."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<dateTime>",
+                  "description": "(Required) ISO 8601 start date."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<dateTime>",
+                  "description": "(Required) ISO 8601 end date."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "500",
+                  "description": "Desired number of samples returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "radius",
+                  "value": "<number>",
+                  "description": "Radius in meters (required when shape is circle)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2d45eafa-056f-4900-aa03-0553c6dcba6e",
+              "name": "A paged data stream within the area and time window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shape",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shapeParams",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metadata\": {\n    \"page\": {\n      \"nextPage\": \"string\",\n      \"hasMoreData\": false,\n      \"pageSize\": 3122\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d3fddb8-e9e1-4623-bade-35cdf8a09cae",
+              "name": "Missing radius, improper shapeParams, or invalid date.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shape",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shapeParams",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"error\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3722b4cd-c603-4f22-aab5-36eba8c17051",
+              "name": "Authentication failed or no token provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shape",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "shapeParams",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "500"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No token provided\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sofarocean.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1c788afc-9429-4233-bb12-1b9834b5b2d6",
+    "name": "Sofar Ocean Spotter & Smart Mooring Devices Spotter Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spotter & Smart Mooring API gives you access to data transmitted by your Spotter buoys and any attached Smart Mooring sensors via telemetry, plus the Sofar Operational Wave Spectra forecast. Data covers waves, wind, surface temperature, barometric pressure, wave frequency/partition spectra, track position, and subsurface Smart Mooring sensor readings. Transcribed by the API Evangelist enrichment pipeline from the public GitBook documentation; not an official Sofar Ocean specification.\n\nContact Support:\n Name: Sofar Ocean Support",
+      "type": "text/plain"
+    }
+  }
+}

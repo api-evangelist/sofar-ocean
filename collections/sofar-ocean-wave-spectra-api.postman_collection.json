@@ -1,0 +1,348 @@
+{
+  "item": [
+    {
+      "id": "a0c6dac1-795a-43c9-a124-ba5f27e145e4",
+      "name": "Wave Spectra",
+      "description": {
+        "content": "Sofar Operational WaveWatch III wave spectra forecast",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "37e5ddf3-d828-414a-861d-1eeada541144",
+          "name": "List operational wave spectra locations",
+          "request": {
+            "name": "List operational wave spectra locations",
+            "description": {
+              "content": "Returns a list of grid-point locations you have access to for the Sofar Operational Wave Spectra forecast.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "op-wave-spectra"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "736d02be-af7a-48ce-a4bd-23c4d400af5a",
+              "name": "A list of accessible wave spectra grid locations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "op-wave-spectra"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"data\": [\n    {\n      \"latitude\": 2653.4033625378197,\n      \"longitude\": 6000.297964897143,\n      \"url\": \"string\"\n    },\n    {\n      \"latitude\": 2313.3260661536215,\n      \"longitude\": 5431.047674078542,\n      \"url\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fa95403-4021-479b-b406-a53648962075",
+              "name": "Authentication failed or no token provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "op-wave-spectra"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No token provided\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "060eb6b5-1c11-4c38-af50-9519d371988f",
+          "name": "Get operational wave spectra forecast (NetCDF)",
+          "request": {
+            "name": "Get operational wave spectra forecast (NetCDF)",
+            "description": {
+              "content": "Retrieves NetCDF data containing the variance density spectrum at a single grid point of the Sofar global wave model at hourly resolution for the duration of the forecast.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "op-wave-spectra",
+                ":lat",
+                ":lon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "lat",
+                  "description": "(Required) Latitude in decimal degrees (0.5 resolution)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "lon",
+                  "description": "(Required) Longitude in decimal degrees (0.5 resolution)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d3d12aff-fd52-4312-92f8-1fbf4458c57d",
+              "name": "NetCDF spectral data file.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "op-wave-spectra",
+                    ":lat",
+                    ":lon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "lat",
+                      "description": "(Required) Latitude in decimal degrees (0.5 resolution)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "lon",
+                      "description": "(Required) Longitude in decimal degrees (0.5 resolution)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dffd827b-f283-4f59-87ad-1875d46f7a41",
+              "name": "Authentication failed or no token provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "op-wave-spectra",
+                    ":lat",
+                    ":lon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "lat",
+                      "description": "(Required) Latitude in decimal degrees (0.5 resolution)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "lon",
+                      "description": "(Required) Longitude in decimal degrees (0.5 resolution)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"No token provided\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sofarocean.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "55f1a253-d044-44b6-9246-6f6988395797",
+    "name": "Sofar Ocean Spotter & Smart Mooring Devices Wave Spectra API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spotter & Smart Mooring API gives you access to data transmitted by your Spotter buoys and any attached Smart Mooring sensors via telemetry, plus the Sofar Operational Wave Spectra forecast. Data covers waves, wind, surface temperature, barometric pressure, wave frequency/partition spectra, track position, and subsurface Smart Mooring sensor readings. Transcribed by the API Evangelist enrichment pipeline from the public GitBook documentation; not an official Sofar Ocean specification.\n\nContact Support:\n Name: Sofar Ocean Support",
+      "type": "text/plain"
+    }
+  }
+}

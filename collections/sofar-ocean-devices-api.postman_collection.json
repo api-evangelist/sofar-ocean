@@ -1,0 +1,190 @@
+{
+  "item": [
+    {
+      "id": "55e59c63-bde3-4a7e-ae8e-3503b08ab00e",
+      "name": "Devices",
+      "description": {
+        "content": "Spotter device discovery",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c1c28997-f22a-4d3a-89b4-4aa83f1dd27e",
+          "name": "List devices",
+          "request": {
+            "name": "List devices",
+            "description": {
+              "content": "Retrieve a list containing the display name, Spotter ID, and hull type of any Spotters you have API access to (registered to or shared with your account), ordered by spotterId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "devices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "excludeSharedDevices",
+                  "value": "false",
+                  "description": "Set true to limit the response to Spotters registered directly to your account."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c1d087d3-827f-4083-b157-8698282243dd",
+              "name": "A list of Spotters associated with the account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "devices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "excludeSharedDevices",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"data\": {\n    \"devices\": [\n      {\n        \"spotterId\": \"string\",\n        \"name\": \"string\",\n        \"hullType\": \"scout\"\n      },\n      {\n        \"spotterId\": \"string\",\n        \"name\": \"string\",\n        \"hullType\": \"spotter\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ace02b27-d6b2-4180-a0bf-411524e9c36e",
+              "name": "Authentication failed or no token provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "devices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "excludeSharedDevices",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Authentication Failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sofarocean.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f802862d-25dc-4115-8098-b67150bff560",
+    "name": "Sofar Ocean Spotter & Smart Mooring Devices API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spotter & Smart Mooring API gives you access to data transmitted by your Spotter buoys and any attached Smart Mooring sensors via telemetry, plus the Sofar Operational Wave Spectra forecast. Data covers waves, wind, surface temperature, barometric pressure, wave frequency/partition spectra, track position, and subsurface Smart Mooring sensor readings. Transcribed by the API Evangelist enrichment pipeline from the public GitBook documentation; not an official Sofar Ocean specification.\n\nContact Support:\n Name: Sofar Ocean Support",
+      "type": "text/plain"
+    }
+  }
+}
