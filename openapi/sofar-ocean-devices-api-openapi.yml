@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Sofar Ocean Spotter & Smart Mooring Devices API
   version: '1.0'
@@ -47,27 +47,6 @@ paths:
                 $ref: '#/components/schemas/AuthError'
 components:
   schemas:
-    DevicesResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            devices:
-              type: array
-              items:
-                $ref: '#/components/schemas/Device'
-    AuthError:
-      type: object
-      description: Authentication error envelope.
-      properties:
-        message:
-          type: string
-          enum:
-          - Authentication Failed
-          - No token provided
     Device:
       type: object
       properties:
@@ -87,6 +66,27 @@ components:
           - scout
           - velella
           description: The Spotter's hull type.
+    AuthError:
+      type: object
+      description: Authentication error envelope.
+      properties:
+        message:
+          type: string
+          enum:
+          - Authentication Failed
+          - No token provided
+    DevicesResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            devices:
+              type: array
+              items:
+                $ref: '#/components/schemas/Device'
   securitySchemes:
     tokenHeader:
       type: apiKey
