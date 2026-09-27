@@ -73,6 +73,15 @@ paths:
                 $ref: '#/components/schemas/AuthError'
 components:
   schemas:
+    WaveSpectraLocationsResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/WaveSpectraLocation'
     AuthError:
       type: object
       description: Authentication error envelope.
@@ -91,15 +100,6 @@ components:
           type: number
         url:
           type: string
-    WaveSpectraLocationsResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/WaveSpectraLocation'
   securitySchemes:
     tokenHeader:
       type: apiKey

@@ -116,6 +116,16 @@ paths:
                 $ref: '#/components/schemas/AuthError'
 components:
   schemas:
+    StatusError:
+      type: object
+      description: Request error envelope.
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+        message:
+          type: string
     AuthError:
       type: object
       description: Authentication error envelope.
@@ -153,16 +163,6 @@ components:
         configuration_checksum:
           type: string
           description: Unique identifier for the Smart Mooring configuration.
-    StatusError:
-      type: object
-      description: Request error envelope.
-      properties:
-        status:
-          type: string
-          enum:
-          - error
-        message:
-          type: string
     SensorDataResponse:
       type: object
       properties:

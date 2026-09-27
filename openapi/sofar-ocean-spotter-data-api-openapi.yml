@@ -271,21 +271,41 @@ paths:
                 $ref: '#/components/schemas/AuthError'
 components:
   schemas:
+    StatusError:
+      type: object
+      description: Request error envelope.
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+        message:
+          type: string
+    BarometerSample:
+      type: object
+      properties:
+        value:
+          type: number
+        units:
+          type: string
+          description: e.g. hPa
+        unit_type:
+          type: string
+          description: e.g. barometric_pressure
+        data_type_name:
+          type: string
+          description: e.g. sofar_meanbaropressure_13bits
     SpotterDataResponse:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/SpotterData'
-    TrackSample:
+    SurfaceTempSample:
       type: object
       properties:
-        latitude:
+        degrees:
           type: number
-        longitude:
-          type: number
-        timestamp:
-          type: string
-          format: date-time
+          description: Surface temperature in degrees.
     SearchResponse:
       type: object
       properties:
@@ -305,67 +325,6 @@ components:
                   type: boolean
                 pageSize:
                   type: integer
-    BarometerSample:
-      type: object
-      properties:
-        value:
-          type: number
-        units:
-          type: string
-          description: e.g. hPa
-        unit_type:
-          type: string
-          description: e.g. barometric_pressure
-        data_type_name:
-          type: string
-          description: e.g. sofar_meanbaropressure_13bits
-    WaveSample:
-      type: object
-      properties:
-        significantWaveHeight:
-          type: number
-          description: Bulk significant wave height in meters.
-        peakPeriod:
-          type: number
-          description: Peak wave period in seconds.
-        meanPeriod:
-          type: number
-          description: Mean wave period in seconds.
-        peakDirection:
-          type: number
-          description: Peak wave direction in degrees.
-        peakDirectionalSpread:
-          type: number
-          description: Peak wave directional spreading in degrees.
-        meanDirection:
-          type: number
-          description: Mean wave direction in degrees.
-        meanDirectionalSpread:
-          type: number
-          description: Mean wave directional spreading in degrees.
-        timestamp:
-          type: string
-          format: date-time
-        latitude:
-          type: number
-        longitude:
-          type: number
-    SurfaceTempSample:
-      type: object
-      properties:
-        degrees:
-          type: number
-          description: Surface temperature in degrees.
-    StatusError:
-      type: object
-      description: Request error envelope.
-      properties:
-        status:
-          type: string
-          enum:
-          - error
-        message:
-          type: string
     AuthError:
       type: object
       description: Authentication error envelope.
@@ -375,21 +334,6 @@ components:
           enum:
           - Authentication Failed
           - No token provided
-    WindSample:
-      type: object
-      properties:
-        speed:
-          type: number
-          description: Wind speed in meters per second.
-        direction:
-          type: number
-          description: Wind direction in degrees.
-        seasurfaceId:
-          type: integer
-          description: 1 glassy, 2 choppy, 3 rough.
-        algorithm_version:
-          type: integer
-          description: Wind algorithm version.
     SpotterData:
       type: object
       properties:
@@ -440,6 +384,62 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TrackSample'
+    WaveSample:
+      type: object
+      properties:
+        significantWaveHeight:
+          type: number
+          description: Bulk significant wave height in meters.
+        peakPeriod:
+          type: number
+          description: Peak wave period in seconds.
+        meanPeriod:
+          type: number
+          description: Mean wave period in seconds.
+        peakDirection:
+          type: number
+          description: Peak wave direction in degrees.
+        peakDirectionalSpread:
+          type: number
+          description: Peak wave directional spreading in degrees.
+        meanDirection:
+          type: number
+          description: Mean wave direction in degrees.
+        meanDirectionalSpread:
+          type: number
+          description: Mean wave directional spreading in degrees.
+        timestamp:
+          type: string
+          format: date-time
+        latitude:
+          type: number
+        longitude:
+          type: number
+    TrackSample:
+      type: object
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+        timestamp:
+          type: string
+          format: date-time
+    WindSample:
+      type: object
+      properties:
+        speed:
+          type: number
+          description: Wind speed in meters per second.
+        direction:
+          type: number
+          description: Wind direction in degrees.
+        seasurfaceId:
+          type: integer
+          description: 1 glassy, 2 choppy, 3 rough.
+        algorithm_version:
+          type: integer
+          description: Wind algorithm version.
   securitySchemes:
     tokenHeader:
       type: apiKey

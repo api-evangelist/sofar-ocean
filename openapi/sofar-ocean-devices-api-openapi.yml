@@ -47,6 +47,15 @@ paths:
                 $ref: '#/components/schemas/AuthError'
 components:
   schemas:
+    AuthError:
+      type: object
+      description: Authentication error envelope.
+      properties:
+        message:
+          type: string
+          enum:
+          - Authentication Failed
+          - No token provided
     Device:
       type: object
       properties:
@@ -66,15 +75,6 @@ components:
           - scout
           - velella
           description: The Spotter's hull type.
-    AuthError:
-      type: object
-      description: Authentication error envelope.
-      properties:
-        message:
-          type: string
-          enum:
-          - Authentication Failed
-          - No token provided
     DevicesResponse:
       type: object
       properties:
