@@ -271,16 +271,42 @@ paths:
                 $ref: '#/components/schemas/AuthError'
 components:
   schemas:
-    StatusError:
+    SpotterDataResponse:
       type: object
-      description: Request error envelope.
       properties:
-        status:
+        data:
+          $ref: '#/components/schemas/SpotterData'
+    WaveSample:
+      type: object
+      properties:
+        significantWaveHeight:
+          type: number
+          description: Bulk significant wave height in meters.
+        peakPeriod:
+          type: number
+          description: Peak wave period in seconds.
+        meanPeriod:
+          type: number
+          description: Mean wave period in seconds.
+        peakDirection:
+          type: number
+          description: Peak wave direction in degrees.
+        peakDirectionalSpread:
+          type: number
+          description: Peak wave directional spreading in degrees.
+        meanDirection:
+          type: number
+          description: Mean wave direction in degrees.
+        meanDirectionalSpread:
+          type: number
+          description: Mean wave directional spreading in degrees.
+        timestamp:
           type: string
-          enum:
-          - error
-        message:
-          type: string
+          format: date-time
+        latitude:
+          type: number
+        longitude:
+          type: number
     BarometerSample:
       type: object
       properties:
@@ -295,45 +321,16 @@ components:
         data_type_name:
           type: string
           description: e.g. sofar_meanbaropressure_13bits
-    SpotterDataResponse:
+    TrackSample:
       type: object
       properties:
-        data:
-          $ref: '#/components/schemas/SpotterData'
-    SurfaceTempSample:
-      type: object
-      properties:
-        degrees:
+        latitude:
           type: number
-          description: Surface temperature in degrees.
-    SearchResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-        metadata:
-          type: object
-          properties:
-            page:
-              type: object
-              properties:
-                nextPage:
-                  type: string
-                hasMoreData:
-                  type: boolean
-                pageSize:
-                  type: integer
-    AuthError:
-      type: object
-      description: Authentication error envelope.
-      properties:
-        message:
+        longitude:
+          type: number
+        timestamp:
           type: string
-          enum:
-          - Authentication Failed
-          - No token provided
+          format: date-time
     SpotterData:
       type: object
       properties:
@@ -384,47 +381,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TrackSample'
-    WaveSample:
+    AuthError:
+      type: object
+      description: Authentication error envelope.
+      properties:
+        message:
+          type: string
+          enum:
+          - Authentication Failed
+          - No token provided
+    SearchResponse:
       type: object
       properties:
-        significantWaveHeight:
-          type: number
-          description: Bulk significant wave height in meters.
-        peakPeriod:
-          type: number
-          description: Peak wave period in seconds.
-        meanPeriod:
-          type: number
-          description: Mean wave period in seconds.
-        peakDirection:
-          type: number
-          description: Peak wave direction in degrees.
-        peakDirectionalSpread:
-          type: number
-          description: Peak wave directional spreading in degrees.
-        meanDirection:
-          type: number
-          description: Mean wave direction in degrees.
-        meanDirectionalSpread:
-          type: number
-          description: Mean wave directional spreading in degrees.
-        timestamp:
-          type: string
-          format: date-time
-        latitude:
-          type: number
-        longitude:
-          type: number
-    TrackSample:
-      type: object
-      properties:
-        latitude:
-          type: number
-        longitude:
-          type: number
-        timestamp:
-          type: string
-          format: date-time
+        data:
+          type: array
+          items:
+            type: object
+        metadata:
+          type: object
+          properties:
+            page:
+              type: object
+              properties:
+                nextPage:
+                  type: string
+                hasMoreData:
+                  type: boolean
+                pageSize:
+                  type: integer
     WindSample:
       type: object
       properties:
@@ -440,6 +424,22 @@ components:
         algorithm_version:
           type: integer
           description: Wind algorithm version.
+    StatusError:
+      type: object
+      description: Request error envelope.
+      properties:
+        status:
+          type: string
+          enum:
+          - error
+        message:
+          type: string
+    SurfaceTempSample:
+      type: object
+      properties:
+        degrees:
+          type: number
+          description: Surface temperature in degrees.
   securitySchemes:
     tokenHeader:
       type: apiKey

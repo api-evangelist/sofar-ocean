@@ -126,6 +126,17 @@ components:
           - error
         message:
           type: string
+    SensorDataResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        spotterId:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SensorReading'
     AuthError:
       type: object
       description: Authentication error envelope.
@@ -163,17 +174,6 @@ components:
         configuration_checksum:
           type: string
           description: Unique identifier for the Smart Mooring configuration.
-    SensorDataResponse:
-      type: object
-      properties:
-        status:
-          type: string
-        spotterId:
-          type: string
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/SensorReading'
   securitySchemes:
     tokenHeader:
       type: apiKey
