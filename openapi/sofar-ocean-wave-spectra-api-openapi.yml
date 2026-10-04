@@ -82,15 +82,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/WaveSpectraLocation'
-    AuthError:
-      type: object
-      description: Authentication error envelope.
-      properties:
-        message:
-          type: string
-          enum:
-          - Authentication Failed
-          - No token provided
     WaveSpectraLocation:
       type: object
       properties:
@@ -100,6 +91,15 @@ components:
           type: number
         url:
           type: string
+    AuthError:
+      type: object
+      description: Authentication error envelope.
+      properties:
+        message:
+          type: string
+          enum:
+          - Authentication Failed
+          - No token provided
   securitySchemes:
     tokenHeader:
       type: apiKey

@@ -116,16 +116,6 @@ paths:
                 $ref: '#/components/schemas/AuthError'
 components:
   schemas:
-    StatusError:
-      type: object
-      description: Request error envelope.
-      properties:
-        status:
-          type: string
-          enum:
-          - error
-        message:
-          type: string
     SensorDataResponse:
       type: object
       properties:
@@ -137,15 +127,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SensorReading'
-    AuthError:
+    StatusError:
       type: object
-      description: Authentication error envelope.
+      description: Request error envelope.
       properties:
-        message:
+        status:
           type: string
           enum:
-          - Authentication Failed
-          - No token provided
+          - error
+        message:
+          type: string
     SensorReading:
       type: object
       properties:
@@ -174,6 +165,15 @@ components:
         configuration_checksum:
           type: string
           description: Unique identifier for the Smart Mooring configuration.
+    AuthError:
+      type: object
+      description: Authentication error envelope.
+      properties:
+        message:
+          type: string
+          enum:
+          - Authentication Failed
+          - No token provided
   securitySchemes:
     tokenHeader:
       type: apiKey
